@@ -1,0 +1,43 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum EmailStatus {
+  PENDING @map("pending")
+  SENT    @map("sent")
+  FAILED  @map("failed")
+}
+
+model Email {
+  id             String      @id @default(uuid())
+  senderEmail    String      @map("sender_email")
+  recipientEmail String      @map("recipient_email")
+  subject        String
+  body           String
+  scheduledTime  DateTime    @map("scheduled_time")
+  delayMs        Int?        @default(0) @map("delay_ms")
+  hourlyLimit    Int?        @map("hourly_limit")
+  status         EmailStatus @default(PENDING)
+  sentTime       DateTime?   @map("sent_time")
+  createdAt      DateTime    @default(now()) @map("created_at")
+
+  @@map("emails")
+}
+
+model SlackIntegration {
+  id          String   @id @default(uuid())
+  userId      String   @map("user_id")
+  accessToken String?  @map("access_token")
+  webhookUrl  String?  @map("webhook_url")
+  connectedAt DateTime @default(now()) @map("connected_at")
+
+  @@map("slack_integrations")
+}
