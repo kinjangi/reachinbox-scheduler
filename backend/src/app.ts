@@ -23,7 +23,7 @@ app.use(express.urlencoded({ extended: true }));
 // Request logging with Pino
 app.use(pinoHttp({
   level: process.env.NODE_ENV === 'production' ? 'info' : 'debug',
-  transport: process.env.NODE_ENV !== 'production' ? { target: 'pino-pretty' } : undefined,
+  transport: process.env.NODE_ENV === 'development' ? { target: 'pino-pretty' } : undefined,
 }));
 
 // Bull Board live queue dashboard at /admin/queues
