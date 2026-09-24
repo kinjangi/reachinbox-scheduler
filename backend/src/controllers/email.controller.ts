@@ -145,8 +145,8 @@ export const scheduleEmailsHandler = async (
         },
       });
 
-      // 2. Index immediately in Elasticsearch (status = pending)
-      await indexEmailDocument(email);
+      // 2. Index immediately in Elasticsearch (status = pending) - Fire and forget
+      indexEmailDocument(email).catch(console.error);
 
       // 3. Enqueue BullMQ delayed job using email.id as idempotent jobId
       const job = await scheduleEmailJob(email.id, targetTime);

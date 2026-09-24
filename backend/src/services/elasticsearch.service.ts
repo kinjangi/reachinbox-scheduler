@@ -10,6 +10,8 @@ export const getElasticsearchClient = (): Client => {
   if (!esClientInstance) {
     esClientInstance = new Client({
       node: config.elasticsearch.node,
+      requestTimeout: 3000,
+      maxRetries: 0,
     });
   }
   return esClientInstance;
