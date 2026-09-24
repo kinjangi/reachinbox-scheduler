@@ -12,6 +12,7 @@ export const getRedisConnectionOptions = (): ConnectionOptions => {
       password: url.password || undefined,
       maxRetriesPerRequest: null,
       enableReadyCheck: false,
+      enableOfflineQueue: false,
     };
   }
 
@@ -20,6 +21,7 @@ export const getRedisConnectionOptions = (): ConnectionOptions => {
     port: 6379,
     maxRetriesPerRequest: null,
     enableReadyCheck: false,
+    enableOfflineQueue: false,
   };
 };
 
@@ -30,6 +32,7 @@ export const getSharedRedisClient = (): Redis => {
     sharedRedisClient = new Redis(config.redisUrl, {
       maxRetriesPerRequest: null,
       enableReadyCheck: false,
+      enableOfflineQueue: false,
     });
   }
   return sharedRedisClient;
